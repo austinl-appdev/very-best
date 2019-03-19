@@ -1,5 +1,6 @@
 class VenuesController < ApplicationController
   def index
+    @bookmarks = Bookmark.all
     @q = Venue.ransack(params.fetch("q", nil))
     @venues = @q.result(:distinct => true).includes(:bookmarks, :neighborhood, :fans, :specialties).page(params.fetch("page", nil)).per(10)
 
@@ -7,7 +8,7 @@ class VenuesController < ApplicationController
       marker.lat venue.address_latitude
       marker.lng venue.address_longitude
       marker.infowindow "<h5><a href='/venues/#{venue.id}'>#{venue.created_at}</a></h5><small>#{venue.address_formatted_address}</small>"
-    @bookmarks = Bookmark.all
+    
     
     end
 

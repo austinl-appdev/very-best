@@ -5,30 +5,35 @@
     
     <div class="card">
       <div class="card-header">
+        
     <dl class="dl-horizontal">
-      <dt>Name</dt>
-      <dd><%= @venue.name %></dd>
-
-      <dt>Address</dt>
+      <h4 class="card-title">
+        <%= @venue.name %>
+        <small class="text-muted">
+           <% if @venue.neighborhood.present? %>
+            <%= @venue.neighborhood.name %>,
+          <% end %>
+      <%= @venue.address %>
+        </small>
+      </h4>
+      </div>
+      
+      
       <dd>
         <div>
           <div id="location_map" style="height: 480px;"></div>
         </div>
       </dd>
 
-      <dt>Neighborhood</dt>
+      
       <dd>
-        <% if @venue.neighborhood.present? %>
-          <a href="/neighborhoods/<%= @venue.neighborhood_id %>">
-            <%= @venue.neighborhood.name %>
-          </a>
-        <% end %>
+        
       </dd>
 
     </dl>
 
    
-  </div>
+
 
 
 <!-- A Venue has many bookmarks -->
@@ -36,26 +41,27 @@
 <div class="row">
   <div class="col-md-12">
     <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
+      <li class="list-group-item list-group-item-success">
         Dishes you loved here
       </li>
 
       <% @venue.bookmarks.each do |bookmark| %>
         <li class="list-group-item">
           <a href="/bookmarks/<%= bookmark.id %>">
-            <%= bookmark.notes %>
+            <%= Dish.find(bookmark.dish_id).name %>
           </a>
-          <div class="btn-group btn-group-xs float-right">
-            <a href="/bookmarks/<%= bookmark.id %>" class="btn btn-primary">
-              <i class="fa fa-search-plus"></i>
-            </a>
-            <a href="/bookmarks/<%= bookmark.id %>/edit" class="btn btn-warning">
-              <i class="fa fa-edit"></i>
-            </a>
-            <a href="/delete_bookmark/<%= bookmark.id %>" class="btn btn-danger" rel="nofollow">
-              <i class="fa fa-trash-o"></i>
-            </a>
-          </div>
+           <small class="float-right text-muted">
+                <%= bookmark.created_at %>
+
+                <a href="/bookmarks/<%= bookmark.id %>/edit">
+                  <i class="fa fa-fw fa-edit"></i>
+                </a>
+
+                <a href="/delete_bookmark/<%= bookmark.id %>">
+                  <i class="fa fa-fw fa-trash-o"></i>
+                </a>
+              </small>
+              
         </li>
       <% end %>
 
@@ -97,7 +103,7 @@
 <div class="row">
   <div class="col-md-12">
     <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
+      <li class="list-group-item list-group-item-success">
         Popular dishes here
       </li>
 
@@ -108,16 +114,17 @@
           </a>
           </div>
         </li>
+        </ul>
+         </div>
       <% end %>
-    </ul>
-    </div>
-      <div class="card-footer text-center">
+      
+       <div class="card-footer text-center">
         <a href="/venues" class="btn btn-block btn-secondary">
           <i class="fa fa-chevron-left"></i>
         </a>
       </div>
-      
         </div>
+        
       </div>
     </div>
   </div>
