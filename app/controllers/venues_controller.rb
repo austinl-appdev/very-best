@@ -1,14 +1,15 @@
 class VenuesController < ApplicationController
+  require 'open-uri'
   def index
     @bookmarks = Bookmark.all
     @q = Venue.ransack(params.fetch("q", nil))
     @venues = @q.result(:distinct => true).includes(:bookmarks, :neighborhood, :fans, :specialties).page(params.fetch("page", nil)).per(10)
-
     @location_hash = Gmaps4rails.build_markers(@venues.where.not(:address_latitude => nil)) do |venue, marker|
       marker.lat venue.address_latitude
       marker.lng venue.address_longitude
       marker.infowindow "<h5><a href='/venues/#{venue.id}'>#{venue.created_at}</a></h5><small>#{venue.address_formatted_address}</small>"
     
+  
     
     end
 
@@ -34,6 +35,15 @@ class VenuesController < ApplicationController
     @venue.name = params.fetch("name")
     @venue.address = params.fetch("address")
     @venue.neighborhood_id = params.fetch("neighborhood_id")
+    @street_address = params.fetch("address")
+    sanitized_street_address = URI.encode(@street_address)
+    url = "https://maps.googleapis.com/maps/api/geocode/json?address="+sanitized_street_address+"&key=AIzaSyCOTPWiuvyyo6sKoIBzKA4-1ol-vTOIOlM"
+    parsed_data = JSON.parse(open(url).read)
+    latitude = parsed_data.dig("results", 0, "geometry", "location", "lat")
+    longitude = parsed_data.dig("results", 0, "geometry", "location", "lng")
+    @venue.address_latitude = latitude
+    @venue.address_longitude = longitude
+    
 
     save_status = @venue.save
 
@@ -63,6 +73,15 @@ class VenuesController < ApplicationController
     @venue.name = params.fetch("name")
     @venue.address = params.fetch("address")
     @venue.neighborhood_id = params.fetch("neighborhood_id")
+    @street_address = params.fetch("address")
+    sanitized_street_address = URI.encode(@street_address)
+    url = "https://maps.googleapis.com/maps/api/geocode/json?address="+sanitized_street_address+"&key=AIzaSyCOTPWiuvyyo6sKoIBzKA4-1ol-vTOIOlM"
+    parsed_data = JSON.parse(open(url).read)
+    latitude = parsed_data.dig("results", 0, "geometry", "location", "lat")
+    longitude = parsed_data.dig("results", 0, "geometry", "location", "lng")
+    @venue.address_latitude = latitude
+    @venue.address_longitude = longitude
+    
 
     save_status = @venue.save
 

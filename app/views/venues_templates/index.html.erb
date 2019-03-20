@@ -32,19 +32,18 @@
           });
       </script>
 
-        <div class="form-group">
+    <div class="form-group">
       <%= f.label :bookmarks_notes_cont, "Bookmarked dish name contains" %>
       <%= f.text_field :bookmarks_notes_cont, :class => "form-control", :placeholder => "Bookmarked dish name contains" %>
     </div>
 
-<div class="form-group">
+    <div class="form-group">
       <%= f.label :neighborhood_name_cont, "Neighborhood name contains" %>
       <%= f.text_field :neighborhood_name_cont, :class => "form-control", :placeholder => "Neighborhood name contains" %>
     </div>
 
       <%= f.submit :class => "btn btn-primary btn-block mb-1" %>
-
-      <a href="/venues" class="btn btn-secondary btn-block mb-1">Clear filters</a>
+    <a href="/venues" class="btn btn-secondary btn-block mb-1">Clear filters</a>
     <% end %>
     <a class="btn btn-secondary btn-block mb-1" data-toggle="collapse" href="#venues_filters">
       Show Filters
@@ -66,20 +65,21 @@
     <div id="location_map" style="height: 480px;"></div>
   </div>
 
-   <% @venues.each do |venue| %>
+   <% @bookmarks.each do |bookmark| %>
       
         <ul class="list-group list-group-flush">
         <li class="list-group-item">
-          <a href="/venues/<%= venue.id %>">
-            <%= venue.name %>
+          <a href="/venues/<%= bookmark.id %>">
+            <%= Venue.find(bookmark.venue_id).name %>
           </a>
           
         <small class="text-muted float-right">
-        <% if venue.neighborhood.present? %>
-              <%= venue.neighborhood.name %>
+        <% if Venue.find(bookmark.venue_id).neighborhood.present? %>
+              <%= Venue.find(bookmark.venue_id).neighborhood.name %>
         <% end %>
         </small>
         </li>
+        </ul>
         
         
       <% end %>
