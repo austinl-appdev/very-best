@@ -1,10 +1,5 @@
 <div class="container">
-  <div class="row">
-    <div class="container">
-      b l a n k 
-    </div>
-  </div>
-  <div class="row">
+  <div class="row mt-3">
     <div class="col-md-3">
       <%= search_form_for @q, :class => "collapse", :id => "dishes_filters" do |f| %>
       <p class="lead">Narrow results:</p>
@@ -12,12 +7,27 @@
           <%= f.label :name_cont, "Name contains" %>
           <%= f.text_field :name_cont, :class => "form-control", :placeholder => "Name contains" %>
         </div>
-
-      <%= f.submit :class => "btn btn-primary btn-block mb-1" %>
+        <div class="form-group">
+          <%= f.label :q_cuisine_id_eq_any, "Cuisine" %>
+          <% @cuisines.each do |cuisine| %>
+          <%#= f.check_box :name_cont, :class => "form-control", :placeholder => cuisine.name %>
+          <%#= f.label :name_cont, cuisine.name %>
+          
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="q[cuisine_id_eq_any][]" id="q_cuisine_id_eq_any_" value="<%= cuisine.id %>">
+            <%= cuisine.name %>            
+          </label>  
+        </div>
+          
+          <% end %>
+        </div>
       
+      <%= f.submit :class => "btn btn-primary btn-block mb-1" %>
       <a href="/dishes" class="btn btn-secondary btn-block mb-1">
         Clear filters
       </a>
+      
       <% end %>
       
       <a class="btn btn-secondary btn-block mb-1" data-toggle="collapse" href="#dishes_filters">
