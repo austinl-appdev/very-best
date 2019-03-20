@@ -12,7 +12,6 @@ class VenuesController < ApplicationController
   
     
     end
-
     render("venues_templates/index.html.erb")
   end
 
