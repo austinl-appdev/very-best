@@ -10,8 +10,6 @@
         <div class="form-group">
           <%= f.label :q_cuisine_id_eq_any, "Cuisine" %>
           <% @cuisines.each do |cuisine| %>
-          <%#= f.check_box :name_cont, :class => "form-control", :placeholder => cuisine.name %>
-          <%#= f.label :name_cont, cuisine.name %>
           
         <div class="checkbox">
           <label>
@@ -49,18 +47,22 @@
               <td> <!-- Dish Name --> 
                 <a href="/dishes/<%= dish.id %>"><%= dish.name %></a>
               </td>
+              <!-- IF loop inserted here -->
               <td>
                 <select name="venue_id" id="venue_id" class="form-control form-control-sm mr-sm-1">
                   <option>
                     Choose a venue...
                   </option>
-                  <option value=<%= select_tag("venue_id", options_from_collection_for_select(Venue.all, :id, :name, @dishes.try(:venue_id)), :class => "form-control") %>
+                  
+                  <option value=<%= select_tag("venue_id", options_from_collection_for_select(Venue.order(:name), :id, :name, @dishes.try(:venue_id)), :class => "form-control") %>
               </td>
               <td>
                 <button class="btn btn-primary btn-sm">
                   <i class="fa fa-heart"></i>
                 </button>
               </td>
+              <!-- ELSE -->
+              
               <td>
                 <% if dish.cuisine.present? %>
                   <span class="badge badge-primary">
@@ -68,6 +70,7 @@
                   </span>
                 <% end %>
               </td>
+              
             </tr>
           <% end %>
         </table>
