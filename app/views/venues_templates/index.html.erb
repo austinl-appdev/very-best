@@ -63,13 +63,13 @@
         <% if current_user.id == bookmark.user_id %>
         <ul class="list-group list-group-flush">
         <li class="list-group-item">
-          <a href="/venues/<%= bookmark.id %>">
-            <%= Venue.find(bookmark.id).name %>
+          <a href="/venues/<%= bookmark.venue_id %>">
+            <%= Venue.find(bookmark.venue_id).name %>
           </a>
           
         <small class="text-muted float-right">
-        <% if Venue.find(bookmark.id).neighborhood.present? %>
-              <%= Venue.find(bookmark.id).neighborhood.name %>
+        <% if Venue.find(bookmark.venue_id).neighborhood.present? %>
+              <%= Venue.find(bookmark.venue_id).neighborhood.name %>
         <% end %>
         </small>
         </li>
@@ -83,9 +83,13 @@
   </div>
 </div>
     
-    <div class="col-md-3">
-      <a href="/venues/new" class="btn btn-secondary btn-block mb-1 btn-success">Add a new venue</a>
+    <tr>
+       <div class="col-md-3">
+      <a href="/venues/new" class="btn btn-secondary btn-block mb-1 btn-success">
+        Add a new venue</a>
     </div>
+    </tr>
+   
     
   </div>
 </div>

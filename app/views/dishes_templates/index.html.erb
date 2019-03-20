@@ -1,12 +1,5 @@
 <div class="container">
-  <div class="row">
-        <div class="container">
-           <div class="alert alert-dismissable alert-success">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            Signed in successfully.
-          </div>  
-        </div>
-  </div>
+
   <div class="row">
     <div class="col-md-3">
       <%= search_form_for @q, :class => "collapse", :id => "dishes_filters" do |f| %>
@@ -50,9 +43,11 @@
                   <option value=<%= select_tag("venue_id", options_from_collection_for_select(Venue.all, :id, :name, @dishes.try(:venue_id)), :class => "form-control") %>
               </td>
               <td>
-                <button class="btn btn-primary btn-sm">
+                <a href="/create_bookmark">
+                  <button class="btn btn-primary btn-sm">
                   <i class="fa fa-heart"></i>
                 </button>
+                </a>
               </td>
               <td>
                 <% if dish.cuisine.present? %>
