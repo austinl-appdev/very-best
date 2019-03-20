@@ -40,6 +40,7 @@
       </li>
 
       <% @venue.bookmarks.each do |bookmark| %>
+        <% if current_user.id == bookmark.user_id %>
         <li class="list-group-item">
           <a href="/bookmarks/<%= bookmark.id %>">
             <%= Dish.find(bookmark.dish_id).name %>
@@ -57,6 +58,8 @@
               </small>
               
         </li>
+        <% else %>
+        <% end %>
       <% end %>
 
       <li class="list-group-item">
@@ -102,6 +105,8 @@
       </li>
 
       <% @venue.specialties.each do |dish| %>
+      <% if dish.name == @venue.specialties %>
+      <% else %>
         <li class="list-group-item">
           <a href="/dishes/<%= dish.id %>">
             <%= dish.name %>
@@ -110,6 +115,7 @@
         </li>
         </ul>
          </div>
+         <% end %>
       <% end %>
       
        <div class="card-footer text-center">

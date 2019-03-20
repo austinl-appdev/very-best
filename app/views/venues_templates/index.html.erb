@@ -66,21 +66,22 @@
   </div>
 
    <% @bookmarks.each do |bookmark| %>
-      
+        <% if current_user.id == bookmark.user_id %>
         <ul class="list-group list-group-flush">
         <li class="list-group-item">
           <a href="/venues/<%= bookmark.id %>">
-            <%= Venue.find(bookmark.venue_id).name %>
+            <%= Venue.find(bookmark.id).name %>
           </a>
           
         <small class="text-muted float-right">
-        <% if Venue.find(bookmark.venue_id).neighborhood.present? %>
-              <%= Venue.find(bookmark.venue_id).neighborhood.name %>
+        <% if Venue.find(bookmark.id).neighborhood.present? %>
+              <%= Venue.find(bookmark.id).neighborhood.name %>
         <% end %>
         </small>
         </li>
         </ul>
-        
+        <% else %>
+        <% end %>
         
       <% end %>
       </div>
