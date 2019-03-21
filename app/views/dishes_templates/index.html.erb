@@ -46,6 +46,15 @@
             <th></th>
           </tr>
           <% @dishes.each do |dish| %>
+          <% @bookmarked_user_dishes = Bookmark.where(:dish_id => dish.id, :user_id => current_user) %>
+            <% if @bookmarked_user_dishes.first.present? %>
+              <td>
+                <a href="/dishes/<%= dish.id %>"><%= dish.name %></a>
+              </td>
+              <td>
+                <a href="/venues/<%= @bookmarked_user_dishes.first.venue_id %>"><%= Venue.find(@bookmarked_user_dishes.first.venue_id).name %></a>
+              </td>
+              <% else %>
             <tr>
               <td> <!-- Dish Name --> 
                 <a href="/dishes/<%= dish.id %>"><%= dish.name %></a>
@@ -59,11 +68,8 @@
                       <option>
                         Choose a venue...
                       </option>
-                      <option value=<%= select_tag("venue_id", options_from_collection_for_select(Venue.all, :id, :name, @dishes.try(:venue_id)), :class => "form-control") %>
-                    
-              
-                    <!-- Label and input for dish_id -->
-                    <input type="hidden" name="dish_id" value="<%= dish.id %>">
+                      <option value= <%= select_tag("venue_id", options_from_collection_for_select(Venue.all, :id, :name, @dishes.try(:venue_id)), :class => "form-control") %> 
+                     <input type="hidden" name="dish_id" value="<%= dish.id %>">
               
                     <!-- Label and input for user_id -->
                     <input type="hidden" name="user_id" value="<%= current_user.id %>">
@@ -76,7 +82,7 @@
                     </button>
                     </div>
               </form>
-              
+              <% end %>
                 <td>
                  <% if dish.cuisine.present? %>
                   <span class="badge badge-primary">

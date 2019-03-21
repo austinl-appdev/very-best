@@ -3,18 +3,18 @@
   <div class="row">
    <div class="col-md-3">
      
-    <%= search_form_for @q, :class => "collapse", :id => "venues_filters" do |f| %>
+    <%= search_form_for @v, :class => "collapse", :id => "venues_filters" do |f| %>
       <p class="lead">Narrow results:</p>
 
-        <div class="form-group">
-    <%= f.label :name_cont, "Name contains" %>
-    <%= f.text_field :name_cont, :class => "form-control", :placeholder => "Name contains" %>
-  </div>
+      <div class="form-group">
+        <%= f.label :name_cont, "Name contains" %>
+        <%= f.text_field :name_cont, :class => "form-control", :placeholder => "Name contains" %>
+      </div>
 
-    <div class="form-group">
-      <%= f.label :bookmarks_notes_cont, "Bookmarked dish name contains" %>
-      <%= f.text_field :bookmarks_notes_cont, :class => "form-control", :placeholder => "Bookmarked dish name contains" %>
-    </div>
+      <div class="form-group">
+        <%= f.label :bookmarks_notes_cont, "Bookmarked dish name contains" %>
+        <%= f.text_field :bookmarks_notes_cont, :class => "form-control", :placeholder => "Bookmarked dish name contains" %>
+      </div>
 
     <div class="form-group">
       <%= f.label :neighborhood_name_cont, "Neighborhood name contains" %>
@@ -22,14 +22,14 @@
     </div>
 
       <%= f.submit :class => "btn btn-primary btn-block mb-1" %>
-    <a href="/venues" class="btn btn-secondary btn-block mb-1">Clear filters</a>
+    <a href="/venues" class="btn btn-secondary btn-block mb-1">Clear filters
+    </a>
+    
     <% end %>
     <a class="btn btn-secondary btn-block mb-1" data-toggle="collapse" href="#venues_filters">
       Show Filters
     </a>
   </div>
-  
-  
   
     
    <div class="col-md-6">
@@ -40,7 +40,7 @@
       </h4>
     </div>
   
-  
+   
   <div class="card-body">
     <div id="location_map" style="height: 480px;"></div>
   </div>
